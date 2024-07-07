@@ -1,0 +1,37 @@
+# Byte-compiled / optimized Python files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django generated files
+*.log
+*.pot
+*.pyc
+media/
+staticfiles/
+
+# Ignore environment-specific settings
+.env
+
+# Ignore local development settings
+local_settings.py
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore IDE files (adjust as needed based on your IDE/editor)
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+
+# Ignore backup and temporary files
+*~
+*.bak
+*.swp
+
+# Ignore MySQL database
+*.mysql
+
+venv/
+.venv/
