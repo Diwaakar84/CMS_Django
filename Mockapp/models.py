@@ -26,19 +26,19 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
-    categories = models.ManyToManyField(Category, through='CategoriesPosts')
+    categories = models.ManyToManyField(Category)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
 
-class CategoriesPosts(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+# class CategoriesPosts(models.Model):
+#     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+#     post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
-    class Meta:
-        unique_together = ('category', 'post')
+#     class Meta:
+#         unique_together = ('category', 'post')
 
 class Comment(models.Model):
     commenter = models.CharField(max_length=100)
