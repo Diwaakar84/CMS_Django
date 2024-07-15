@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="landing_page">
+    <h1>Content Management System</h1>
+    <a href="{% url 'category_list' %}" class="welcome_button">Categories</a>
+    <a href="{% url 'post_index' %}" class="welcome_button">Posts</a>
+
+
+    <!-- {% if user.is_authenticated %}
+        <a href="{% url 'my_posts' user.id %}" class="welcome_button">My Posts</a>
+    {% endif %} -->
+
+
+</div>
+
+{% endblock %}

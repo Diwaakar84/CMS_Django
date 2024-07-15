@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="button-container" style="text-align: left;">
+    <a href="{{ request.META.HTTP_REFERER|default:posts_path }}" class="like-button">Back</a>
+</div>
+
+<div class="post">
+    <h1>{{ post.title }}</h1>
+    <p><strong>Posted by:</strong> {{ post.user.username }}</p>
+    <p><strong>Description:</strong> {{ post.description }}</p>
+    <p>Likes: {{ post.likes.count }}</p>
+
+    {% if post.categories.exists %}
+        <p><strong>Categories:</strong>
+            {% for category in post.categories.all %}
+                {{ category.title }}
+            {% endfor %}
+        </p>
+    {% endif %}
+
+    <div class="post-actions">
+        <a href="{% url 'edit_post' post.id %}" class="links">Edit</a>
+        <a href="{% url 'delete_post' post.id %}" class="delete-button" onclick="return confirm('Are you sure?')">Delete</a>
+    </div>
+
+    {% if user.is_authenticated %}
+        <div class="like-button">
+            {% if post.likes.filter(user_id=user.id).exists %}
+                <form action="{% url 'unlike_post' post.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Unlike</button>
+                </form>
+            {% else %}
+                <form action="{% url 'like_post' post.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Like</button>
+                </form>
+            {% endif %}
+        </div>
+
+        <div class="comment-form">
+            <h2>Add Comment:</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="hidden" name="commenter" value="{{ user.username }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="id_text">Comment:</label><br>
+                    <textarea name="text" class="form-control"></textarea>
+                </div>
+
+                <div class="button-container">
+                    <button type="submit" class="like-button">Submit</button>
+                </div>
+            </form>
+        </div>
+    {% endif %}
+
+    {% if post.comments.count > 0 %}
+        <div class="post-comment-box">
+            <h2>Comments:</h2>
+            {% for comment in post.comments %}
+                {% if comment.commenter and comment.text %}
+                    <div class="comment">
+                        <p><strong>Commenter:</strong> {{ comment.commenter }}</p>
+                        <p><strong>Comment:</strong> {{ comment.text }}</p>
+                        <div class="comment-actions">
+                            <a href="{% url 'delete_comment' post.id comment.id %}" class="delete-button" onclick="return confirm('Are you sure?')">Delete</a>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+
+{% include 'posts/script.html' %}
+
+{% end block %}

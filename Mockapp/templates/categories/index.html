@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+    <div class="button-container" style="text-align: right;">
+        <a href="{% url 'new_category' %}" class="like-button">Add Category</a>
+    </div>
+{% endif %}
+
+<h1 class="category_title">Categories</h1>
+
+<div class="categories">
+    {% for category in categories %}
+        <a href="{% url 'category_posts' category.id %}" class="links">{{ category.title }}</a>
+    {% empty %}
+        <p>No categories found.</p>
+    {% endfor %}
+</div>
+
+{% include 'script.html' %}
+
+{% end block %}

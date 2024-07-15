@@ -12,14 +12,14 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['id', 'title', 'description', 'user', 'created_at', 'updated_at']
+        fields = ['id', 'title', 'description', 'categories', 'user', 'created_at', 'updated_at']
 
 class CategorySerializer(serializers.ModelSerializer):
     posts = serializers.PrimaryKeyRelatedField(many=True, queryset=Post.objects.all())
 
     class Meta:
         model = Category
-        fields = ['id', 'title', 'created_at', 'updated_at']
+        fields = ['id', 'title', 'posts',    'created_at', 'updated_at']
 
 class CommentSerializer(serializers.ModelSerializer):
     post = serializers.PrimaryKeyRelatedField(queryset=Post.objects.all())
@@ -32,7 +32,7 @@ class CommentSerializer(serializers.ModelSerializer):
 class LikeSerializer(serializers.ModelSerializer):
     post = serializers.PrimaryKeyRelatedField(queryset=Post.objects.all())
     user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
-    
+
     class Meta:
         model = Like
         fields = ['id', 'post', 'user', 'created_at', 'updated_at']
