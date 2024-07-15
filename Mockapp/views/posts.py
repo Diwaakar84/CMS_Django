@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from ..models import Post
+from .forms import PostForm
 
 def post_index(request):
     posts = Post.objects.all()
@@ -10,8 +11,18 @@ def post_detail(request, pk):
     return render(request, 'posts/detail.html', {'post': post})
 
 def new_post(request):
-    # Implement your create view logic here
-    return render(request, 'posts/new.html')
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        print(form)
+        if form.is_valid():
+            # Process form data if valid
+            form.save()
+            return redirect('post_list')  # Replace with your redirect URL
+    else:
+        form = PostForm()  # Create an instance of the form for GET requests
+
+    return render(request, 'posts/new.html', {'form': form})
+    # return render(request, 'posts/new.html')
 
 def post_edit(request, pk):
     # Implement your edit view logic here

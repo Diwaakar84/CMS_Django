@@ -32,7 +32,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 #Custom User
-AUTH_USER_MODEL = 'Mockapp.User'
+# AUTH_USER_MODEL = 'Mockapp.User'
 
 # Application definition
 INSTALLED_APPS = [

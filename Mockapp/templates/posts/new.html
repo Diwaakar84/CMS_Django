@@ -6,16 +6,6 @@
 
 <form method="post" class="category-form">
     {% csrf_token %}
-    {% if post.errors.any %}
-        <div id="error_explanation">
-            <h2>{{ post.errors.count }} prohibited this post from being saved:</h2>
-            <ul>
-                {% for msg in post.errors.full_messages %}
-                    <li>{{ msg }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
 
     <div class="form-group">
         <label for="id_title">Title:</label><br>
