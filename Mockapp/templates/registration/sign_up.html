@@ -1,5 +1,3 @@
-<!-- signup.html -->
-
 {% extends 'base.html' %}
 {% load static %}
 
@@ -7,11 +5,13 @@
 
 <div class="comment-form">
   <h2>Sign Up</h2>
-  <form method="post">
+  <form method="post" class="category-form">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Register</button>
-</form>
+    <div class="button-container">
+      <button type="submit" class="like-button">Sign Up</button>
+    </div>
+  </form>
 </div>
 
 {% endblock %}

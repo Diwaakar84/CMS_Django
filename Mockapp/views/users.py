@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import logout, authenticate, login as auth_login
 from django.contrib import messages
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
@@ -8,18 +8,6 @@ from .forms import UserRegisterForm
 
 def welcome_index(request):
     return render(request, 'welcome/index.html')
-
-# def sign_up(request):
-#     if request.method == 'POST':
-#         form = UserCreationForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             username = form.cleaned_data.get('username')
-#             messages.success(request, f'Account created for {username}!')
-#             return redirect('login')
-#     else:
-#         form = UserCreationForm()
-#     return render(request, 'users/new.html', {'form': form})
 
 def register(request):
     if request.method == 'POST':
@@ -29,22 +17,30 @@ def register(request):
 
             return redirect('login')
     else:
-        form = render("user/sign_up.html")
-    return render(request, 'user/sign_up.html', {'form': form, 'title':'register here'})
+        form = UserRegisterForm()
+    return render(request, 'registration/sign_up.html', {'form': form, 'title':'register here'})
 
-def Login(request):
-    if request.method == 'POST':  
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username = username, password = password)
-        if user is not None:
-            form = login(request, user)
-            messages.success(request, f' welcome {username} !!')
-            return redirect('index')
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                auth_login(request, user)
+                messages.success(request, f'Welcome {username}!')
+                return redirect('welcome_index')  # Adjust this to your home page
+            else:
+                messages.error(request, 'Invalid username or password.')
         else:
-            messages.info(request, f'account done not exit plz sign in')
-    form = AuthenticationForm()
-    return render(request, 'user/login.html', {'form':form, 'title':'log in'})
+            messages.error(request, 'Invalid username or password.')
+    
+    else:
+        form = AuthenticationForm()
+
+    return render(request, 'registration/login.html', {'form': form, 'title': 'Log In'})
 
 # class SignUpView(CreateView):
 #     template_name = 'registration/sign_up.html'

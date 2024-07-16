@@ -10,9 +10,8 @@ urlpatterns = [
 
     # User paths
     path('sign_up/', users.register, name='sign_up'),
-    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('login/', users.login_view, name='login'),
     path('logout/', users.logout_view, name='logout'),
-    # path('edit_profile/', users.edit_profile, name='edit_profile'),
 
     # Post paths
     path('posts/', posts.post_index, name='post_index'),

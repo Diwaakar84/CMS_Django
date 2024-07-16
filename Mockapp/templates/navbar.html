@@ -4,14 +4,13 @@
             <ul>
                 <li><a href="{% url 'category_list' %}" class="category-nav">Categories</a></li>
                 <li><a href="{% url 'post_index' %}" class="post-nav">Posts</a></li>
-                <!-- {% if user.is_authenticated %}
-                    <li><a href="{% url 'my_posts' user.id %}" class="my-posts-nav">My Posts</a></li>
+                {% if user.is_authenticated %}
+                    <!-- Add My posts link -->
                     <li style="float: right;"><a href="{% url 'logout' %}" class="signout-nav">Sign Out</a></li>
-                    <li style="float: right;"><a href="{% url 'edit_profile' %}" class="edit-profile-nav">Edit Profile</a></li>
                 {% else %}
                     <li style="float: right;"><a href="{% url 'sign_up' %}" class="signup-nav">Sign Up</a></li>
                     <li style="float: right;"><a href="{% url 'login' %}" class="signin-nav">Sign In</a></li>
-                {% endif %} -->
+                {% endif %}
             </ul>
         </nav>
     </div>

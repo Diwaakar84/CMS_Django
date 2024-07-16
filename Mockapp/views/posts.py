@@ -17,9 +17,9 @@ def new_post(request):
         if form.is_valid():
 
             form.save()
-            return redirect('post_list')  # Replace with your redirect URL
+            return redirect('post_list')
     else:
-        form = PostForm()  # Create an instance of the form for GET requests
+        form = PostForm()
 
     return render(request, 'posts/new.html', {'form': form})
 
