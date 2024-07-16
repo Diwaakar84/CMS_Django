@@ -74,13 +74,13 @@ def logout_view(request):
     logout(request)
     return redirect('welcome_index')
 
-def edit_profile(request):
-    if request.method == 'POST':
-        form = UserUpdateForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Your profile has been updated!')
-            return redirect('edit_profile')
-    else:
-        form = UserUpdateForm(instance=request.user)
-    return render(request, 'users/edit.html', {'form': form})
+# def edit_profile(request):
+#     if request.method == 'POST':
+#         form = UserUpdateForm(request.POST, instance=request.user)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, 'Your profile has been updated!')
+#             return redirect('edit_profile')
+#     else:
+#         form = UserUpdateForm(instance=request.user)
+#     return render(request, 'users/edit.html', {'form': form})

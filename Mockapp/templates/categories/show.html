@@ -3,14 +3,14 @@
 {% block content %}
 
 <div class="button-container" style="text-align: left;">
-    <a href="{{ request.META.HTTP_REFERER|default:categories_path }}" class="like-button">Back</a>
+    <a href="{% url 'category_list' %}" class="like-button">Back</a>
 </div>
 
 <h1 class="category_title">{{ category.title }}</h1>
 
 <div class="post-actions">
-    <a href="{% url 'edit_category' category.id %}" class="links">Edit</a>
-    <a href="{% url 'delete_category' category.id %}" onclick="return confirm('Are you sure?')" class="delete-button">Delete</a>
+    <a href="{% url 'category_edit' category.id %}" class="links">Edit</a>
+    <a href="{% url 'category_delete' category.id %}" onclick="return confirm('Are you sure?')" class="delete-button">Delete</a>
 </div>
 
 <div class="post-container">

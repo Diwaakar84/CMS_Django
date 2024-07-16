@@ -4,19 +4,11 @@
 
 <h2 class="category_title">Edit Category</h2>
 
-<form method="post" action="{% url 'edit_category' category.id %}" class="category-form">
+<form method="post" action="{% url 'category_edit' category.id %}" class="category-form">
     {% csrf_token %}
-    {% if category.errors %}
-        <div id="error_explanation">
-            <h2>{{ category.errors|length }} prohibited this category from being saved:</h2>
-            <ul>
-                {% for error in category.errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
 
+    <input type="hidden" name="_method" value="patch">
+    
     <div class="form-group">
         <label for="id_title" class="form-label">Title:</label><br>
         <input type="text" name="title" id="id_title" value="{{ category.title }}" class="form-control">
@@ -28,6 +20,6 @@
     </div>
 </form>
 
-{% include 'script.html' %}
+{% include './script.html' %}
 
 {% endblock %}

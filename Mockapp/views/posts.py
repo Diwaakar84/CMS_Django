@@ -15,14 +15,13 @@ def new_post(request):
         form = PostForm(request.POST)
         print(form)
         if form.is_valid():
-            # Process form data if valid
+
             form.save()
             return redirect('post_list')  # Replace with your redirect URL
     else:
         form = PostForm()  # Create an instance of the form for GET requests
 
     return render(request, 'posts/new.html', {'form': form})
-    # return render(request, 'posts/new.html')
 
 def post_edit(request, pk):
     # Implement your edit view logic here

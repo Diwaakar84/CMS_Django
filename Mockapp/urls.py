@@ -1,16 +1,8 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-# from .views import UserViewSet, PostViewSet, CategoryViewSet, CommentViewSet, LikeViewSet
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView
 from .views import categories, posts, users
-
-# router = DefaultRouter()
-# router.register(r'users', UserViewSet)
-# # router.register(r'posts', PostViewSet)
-# router.register(r'categories', CategoryViewSet)
-# router.register(r'comments', CommentViewSet)
-# router.register(r'likes', LikeViewSet)
 
 urlpatterns = [
     # Root path
