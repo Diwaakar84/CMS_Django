@@ -16,22 +16,21 @@
         </p>
     {% endif %}
 
-    <div class="post-actions">
-        <a href="{% url 'post_edit' post.id %}" class="links">Edit</a>
-        <a href="{% url 'post_delete' post.id %}" class="delete-button" onclick="return confirm('Are you sure?')">Delete</a>
-    </div>
+    {% if user.is_authenticated %}
+        <div class="post-actions">
+            <a href="{% url 'post_edit' post.id %}" class="links">Edit</a>
+            <a href="{% url 'post_delete' post.id %}" class="delete-button" onclick="return confirm('Are you sure?')">Delete</a>
+        </div>
+    {% endif %}
 
     {% if user.is_authenticated %}
         <div class="comment-form">
             <h2>Add Comment:</h2>
-            <form method="post">
+            <form method="post" action="{% url 'add_comment' post.id %}">
                 {% csrf_token %}
+                
                 <div class="form-group">
-                    <input type="hidden" name="commenter" value="{{ user.username }}">
-                </div>
-
-                <div class="form-group">
-                    <label for="id_text">Comment:</label><br>
+                    <label for="id_comment" class="form-label">Comment:</label><br>
                     <textarea name="text" class="form-control"></textarea>
                 </div>
 
@@ -45,14 +44,16 @@
     {% if post.comments.count > 0 %}
         <div class="post-comment-box">
             <h2>Comments:</h2>
-            {% for comment in post.comments %}
+            {% for comment in post.comments.all %}
                 {% if comment.commenter and comment.text %}
                     <div class="comment">
                         <p><strong>Commenter:</strong> {{ comment.commenter }}</p>
                         <p><strong>Comment:</strong> {{ comment.text }}</p>
-                        <div class="comment-actions">
-                            <a href="{% url 'delete_comment' post.id comment.id %}" class="delete-button" onclick="return confirm('Are you sure?')">Delete</a>
-                        </div>
+                        {% if user.is_authenticated %}
+                            <div class="comment-actions">
+                                <a href="{% url 'delete_comment' post.id comment.id %}" class="delete-button" onclick="return confirm('Are you sure?')">Delete</a>
+                            </div>
+                        {% endif %}
                     </div>
                 {% endif %}
             {% endfor %}

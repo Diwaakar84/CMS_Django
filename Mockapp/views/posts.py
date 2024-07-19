@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
-from ..models import Post
-from .forms import PostForm
+from ..models import Post, Comment
+from .forms import PostForm, CommentForm
+from django.contrib import messages
 
 def post_index(request):
     posts = Post.objects.all()
@@ -10,7 +11,13 @@ def post_index(request):
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
+    form = CommentForm()
     return render(request, 'posts/show.html', {'post': post})
+
+@login_required
+def user_posts(request, user_id):
+    posts = Post.objects.filter(user=user_id)
+    return render(request, 'posts/index.html', {'posts': posts})
 
 @login_required
 def new_post(request):
@@ -50,3 +57,29 @@ def post_delete(request, pk):
         return HttpResponseForbidden("You are not allowed to delete this post.")
     post.delete()
     return redirect('post_index')
+
+@login_required
+def add_comment(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.commenter = request.user
+            comment.save()
+
+    return redirect('post_detail', pk=post_id)
+
+@login_required
+def delete_comment(request, post_id, comment_id):
+    post = get_object_or_404(Post, id=post_id)
+    comment = get_object_or_404(Comment, id=comment_id, post_id=post_id)
+
+    if request.user == comment.commenter or request.user == post.user:
+        comment.delete()
+    else:
+        return HttpResponseForbidden("You are not allowed to delete this post.")
+    return redirect('post_detail', pk=post_id)

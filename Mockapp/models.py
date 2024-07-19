@@ -36,10 +36,9 @@ class Post(models.Model):
 #         unique_together = ('category', 'post')
 
 class Comment(models.Model):
-    commenter = models.CharField(max_length=100)
-    text = models.TextField()
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    commenter = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = models.TextField()
 
     def __str__(self):
         return self.commenter

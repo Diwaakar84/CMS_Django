@@ -19,20 +19,6 @@
 
             <div class="post-actions">
                 <a href="{% url 'post_detail' post.id %}" class="links">Show</a>
-                
-                <div class="like-button">
-                    {% if post.likes.filter(user_id=user.id).exists %}
-                        <form action="{% url 'unlike_post' post.id %}" method="post">
-                            {% csrf_token %}
-                            <button type="submit">Unlike</button>
-                        </form>
-                    {% else %}
-                        <form action="{% url 'like_post' post.id %}" method="post">
-                            {% csrf_token %}
-                            <button type="submit">Like</button>
-                        </form>
-                    {% endif %}
-                </div>
             </div>
         </div>
     {% endfor %}

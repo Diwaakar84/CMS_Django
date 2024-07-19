@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from ..models import Post, Category
+from ..models import Post, Category, Comment
 from django.contrib.auth.forms import UserCreationForm
  
 class UserRegisterForm(UserCreationForm):
@@ -33,3 +33,8 @@ class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = ['title']
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text']

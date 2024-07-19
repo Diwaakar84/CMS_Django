@@ -19,7 +19,7 @@ urlpatterns = [
     path('posts/<int:pk>/', posts.post_detail, name='post_detail'),
     path('posts/<int:pk>/edit/', posts.post_edit, name='post_edit'),
     path('posts/<int:pk>/delete/', posts.post_delete, name='post_delete'),
-    # path('users/<int:user_id>/my_posts/', posts.user_posts, name='my_posts'),
+    path('users/<int:user_id>/my_posts/', posts.user_posts, name='my_posts'),
 
     # Category paths
     path('categories/', categories.category_list, name='category_list'),
@@ -27,5 +27,9 @@ urlpatterns = [
     path('categories/<int:pk>/', categories.category_posts, name='category_detail'),
     path('categories/<int:pk>/edit/', categories.category_edit, name='category_edit'),
     path('categories/<int:pk>/delete/', categories.category_delete, name='category_delete'),
-    path('categories/<int:category_id>/posts/', categories.category_posts, name='category_posts'),   
+    path('categories/<int:category_id>/posts/', categories.category_posts, name='category_posts'),
+
+    #Comment paths
+    path('post/<int:post_id>/comment/add', posts.add_comment, name='add_comment'),
+    path('post/<int:post_id>/comment/<int:comment_id>/delete/', posts.delete_comment, name='delete_comment'),
 ]
