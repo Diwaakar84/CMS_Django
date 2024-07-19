@@ -4,31 +4,19 @@
 
 <div class="comment-form">
     <h2>Edit Post</h2>
-    <form method="post" class="category-form">
+    <form method="post" action="{% url 'post_edit' post.id %}" class="category-form">
         {% csrf_token %}
-        {% if post.errors.any %}
-            <div id="error_explanation">
-                <h2>{{ post.errors.count }} prohibited this post from being saved:</h2>
-                <ul>
-                    {% for msg in post.errors.full_messages %}
-                        <li>{{ msg }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endif %}
+        <input type="hidden" name="_method" value="patch">
 
         <div class="form-group">
-            <label for="id_title">Title:</label><br>
-            {{ form.title }}
+            <label for="id_title" class="form-label">Title:</label><br>
+            <input type="text" name="title" id="id_title" value="{{ post.title }}" class="form-control">
         </div>
 
         <div class="form-group">
-            <label for="id_description">Description:</label><br>
-            {{ form.description }}
+            <label for="id_description" class="form-label">Description:</label><br>
+            <input type="text" name="description" id="id_description" value="{{ post.description }}" class="form-control">
         </div>
-
-        {{ form.category_ids }}
-
         <div class="button-container">
             <button type="submit" class="like-button">Submit</button>
         </div>

@@ -12,19 +12,17 @@
 
 <div class="post-container">
     {% for post in posts %}
-        {% if not user.is_authenticated or post.user_id != user.id %}
-            <div class="post">
-                <div class="post-title">{{ post.title }}</div>
-                <div class="post-description">{{ post.description }}</div>
-                <div>Likes: {{ post.likes.count }}</div>
+        <div class="post">
+            <div class="post-title">{{ post.title }}</div>
+            <div class="post-description">{{ post.description }}</div>
+            <div>Likes: {{ post.likes.count }}</div>
 
-                <div class="post-actions">
-                    <a href="{% url 'post_detail' post.id %}" class="links">Show</a>
+            <div class="post-actions">
+                <a href="{% url 'post_detail' post.id %}" class="links">Show</a>
 
-                    
-                </div>
+                
             </div>
-        {% endif %}
+        </div>
     {% endfor %}
 </div>
 
