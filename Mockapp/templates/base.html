@@ -3,9 +3,20 @@
 <head>
     <title>{% block title %}ContentManagementSystem{% endblock %}</title>
     {% csrf_token %}
-    <!-- Add other meta tags and links here -->
      {% load static %}
      <link rel="stylesheet" href="{% static 'css/style.css' %}">
+     <link rel="manifest" href="{% static 'manifest.json' %}">
+     
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register("{% static 'serviceworker.js' %}")
+            .then(function(registration) {
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }).catch(function(error) {
+                console.log('ServiceWorker registration failed: ', error);
+            });
+        }
+    </script>
 
 </head>
 <body>

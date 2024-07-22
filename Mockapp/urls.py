@@ -3,6 +3,8 @@ from rest_framework.routers import DefaultRouter
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView
 from .views import categories, posts, users
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     # Root path
@@ -29,7 +31,11 @@ urlpatterns = [
     path('categories/<int:pk>/delete/', categories.category_delete, name='category_delete'),
     path('categories/<int:category_id>/posts/', categories.category_posts, name='category_posts'),
 
-    #Comment paths
+    # Comment paths
     path('post/<int:post_id>/comment/add', posts.add_comment, name='add_comment'),
     path('post/<int:post_id>/comment/<int:comment_id>/delete/', posts.delete_comment, name='delete_comment'),
+
+    # Offline functionalities
+    path('manifest.json', TemplateView.as_view(template_name="manifest.json", content_type="application/json")),
+    path('serviceworker.js', TemplateView.as_view(template_name="serviceworker.js", content_type="application/javascript")),
 ]
