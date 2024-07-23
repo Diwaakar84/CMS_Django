@@ -35,3 +35,5 @@ local_settings.py
 
 venv/
 .venv/
+
+staticfiles/
