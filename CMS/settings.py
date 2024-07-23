@@ -85,7 +85,7 @@ DATABASES = {
         'HOST': os.getenv('DB_HOST'),
         'PORT': os.getenv('DB_PORT'),
     },
-    'shard1': {
+    'north_america': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': os.getenv('DB1_NAME'),
         'USER': os.getenv('DB_USER'),
@@ -93,7 +93,7 @@ DATABASES = {
         'HOST': os.getenv('DB_HOST'),
         'PORT': os.getenv('DB_PORT'),
     },
-    'shard2': {
+    'europe': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': os.getenv('DB2_NAME'),
         'USER': os.getenv('DB_USER'),
@@ -101,7 +101,7 @@ DATABASES = {
         'HOST': os.getenv('DB_HOST'),
         'PORT': os.getenv('DB_PORT'),
     },
-    'shard3': {
+    'asia': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': os.getenv('DB3_NAME'),
         'USER': os.getenv('DB_USER'),

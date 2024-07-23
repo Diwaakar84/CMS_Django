@@ -6,6 +6,15 @@ from .forms import PostForm, CommentForm
 from django.conf import settings
 from django.db import router
 
+def get_db_for_location(user_location):
+    if user_location == 'North America':
+        return 'north_america'
+    elif user_location == 'Europe':
+        return 'europe'
+    elif user_location == 'Asia':
+        return 'asia'
+    return 'default'
+
 def post_index(request):
     posts = []
     shards = getattr(settings, 'DATABASES', {}).keys()
@@ -29,7 +38,8 @@ def post_detail(request, pk):
 
 @login_required
 def user_posts(request, user_id):
-    posts = Post.objects.using('default').filter(user=user_id)
+    user_location = request.session.get('user_location', 'default')
+    posts = Post.objects.using(get_db_for_location(user_location)).filter(user=user_id)
     return render(request, 'posts/index.html', {'posts': posts})
 
 @login_required
@@ -40,9 +50,8 @@ def new_post(request):
             post = form.save(commit=False)
             post.user = request.user
 
-            shard = router.db_for_write(post.__class__, user_id=post.user.id)
-            post.save(using=shard)
-
+            user_location = request.session.get('user_location', 'default')
+            post.save(using=get_db_for_location(user_location))
             return redirect('post_index')
     else:
         form = PostForm()

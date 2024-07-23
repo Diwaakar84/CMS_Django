@@ -35,6 +35,8 @@ urlpatterns = [
     path('post/<int:post_id>/comment/add', posts.add_comment, name='add_comment'),
     path('post/<int:post_id>/comment/<int:comment_id>/delete/', posts.delete_comment, name='delete_comment'),
 
+    path('set_location/', users.set_location, name='set_location'),
+
     # Offline functionalities
     path('manifest.json', TemplateView.as_view(template_name="manifest.json", content_type="application/json")),
     path('serviceworker.js', TemplateView.as_view(template_name="serviceworker.js", content_type="application/javascript")),

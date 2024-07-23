@@ -1,0 +1,38 @@
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+
+            console.log("Geolocation success:", latitude, longitude);
+
+            fetch('/set_location/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                latitude: latitude,
+                longitude: longitude
+            })
+            }).then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+            }).then(data => {
+            console.log("Geolocation data sent:", data);
+            }).catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+            });
+        }, function(error) {
+            console.error('Geolocation error:', error);
+        });
+        } else {
+        console.error('Geolocation is not supported by this browser.');
+        }
+    });
+</script>
