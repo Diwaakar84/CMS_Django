@@ -31,7 +31,7 @@ def login_view(request):
             if user is not None:
                 auth_login(request, user)
                 messages.success(request, f'Welcome {username}!')
-                return redirect('welcome_index')  # Adjust this to your home page
+                return redirect('welcome_index')
             else:
                 messages.error(request, 'Invalid username or password.')
         else:
@@ -42,41 +42,6 @@ def login_view(request):
 
     return render(request, 'registration/login.html', {'form': form, 'title': 'Log In'})
 
-# class SignUpView(CreateView):
-#     template_name = 'registration/sign_up.html'
-#     form_class = UserCreationForm
-#     success_url = reverse_lazy('welcome_index')
-
-#     def form_valid(self, form):
-#         # Save the user and log them in
-#         print(self)
-#         user = form.save()
-#         login(self.request, user)
-#         return redirect(self.success_url)
-
-# def login_view(request):
-#     if request.method == 'POST':
-#         username = request.POST.get('username')
-#         password = request.POST.get('password')
-#         user = authenticate(request, username=username, password=password)
-#         if user is not None:
-#             login(request, user)
-#             return redirect('welcome_index')
-#         else:
-#             messages.error(request, 'Invalid username or password.')
-#     return render(request, 'sessions/new.html')
-
 def logout_view(request):
     logout(request)
     return redirect('welcome_index')
-
-# def edit_profile(request):
-#     if request.method == 'POST':
-#         form = UserUpdateForm(request.POST, instance=request.user)
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request, 'Your profile has been updated!')
-#             return redirect('edit_profile')
-#     else:
-#         form = UserUpdateForm(instance=request.user)
-#     return render(request, 'users/edit.html', {'form': form})
